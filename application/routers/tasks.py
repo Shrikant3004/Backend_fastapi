@@ -1,8 +1,6 @@
-from fastapi import Depends,status,HTTPException,APIRouter
-from fastapi.params import Body
+from fastapi import Depends,status,HTTPException,APIRouter,Response
 from .. import schema,models,database
 from sqlalchemy.orm import Session
-from typing import List
 from datetime import datetime
 router = APIRouter(
     prefix="/tasks",
@@ -40,3 +38,16 @@ def create_task(task:schema.task,db : Session = Depends(database.get_db)):
     response = schema.task_response(**response_model)
 
     return response
+
+
+@router.delete("/{id}",status_code=status.HTTP_204_NO_CONTENT)
+def delete_task(id:int,db : Session = Depends(database.get_db)):
+    tasks_query = db.query(models.Task).filter(models.Task.id == id)
+    posts = tasks_query.first()
+    
+    if  not tasks_query.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail="page not found")
+    tasks_query.delete()
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT )
