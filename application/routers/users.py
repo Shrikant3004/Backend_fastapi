@@ -9,7 +9,7 @@ router = APIRouter(
 ) 
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
+@router.post("/", status_code=status.HTTP_201_CREATED,response_model=schema.User_response)
 def Create_user(user:schema.User,db : Session = Depends(database.get_db),):
    
 
