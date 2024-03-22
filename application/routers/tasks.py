@@ -27,9 +27,8 @@ def get_task(id:int,db : Session = Depends(database.get_db),get_current_user = D
     user = {"id":user_query.id,"username":user_query.username,"created_at":user_query.created_at}
 
 
-    task_list = [task.task for task in tasks]
-    task_id_list = [task.id for task in tasks]
-    response_model = {"user":user, "task":task_list, "task_id":task_id_list}
+    task_list = [{"task":task.task, "task_id":task.id, "task_status":task.status} for task in tasks]
+    response_model = {"user":user, "task_info":task_list}
     
     return schema.task_response(**response_model)
 
@@ -46,7 +45,7 @@ def create_task(task:schema.task,db : Session = Depends(database.get_db), get_cu
 
     user = {"id":user_query.id,"username":user_query.username,"created_at":datetime.now()}
 
-    response_model = {"user":user,"task":[new_task.task], "task_id":[new_task.id]}
+    response_model = {"user":user,"task_info":[{"task":new_task.task, "task_id":new_task.id, "task_status":new_task.status}]}
     response = schema.task_response(**response_model)
 
     return response

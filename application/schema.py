@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import List
+from typing import List,Any,Optional
 class User(BaseModel):
     username : str
     password : str
@@ -9,6 +9,7 @@ class User(BaseModel):
 
 class task(BaseModel):
     task : str
+    status : Optional[str]
 
 
 
@@ -21,8 +22,7 @@ class User_response(BaseModel):
 
 class task_response(BaseModel):
     user : User_response
-    task : List[str]
-    task_id : List[int]
+    task_info : List[Any]
     class Config:
         orm_mode = True
 

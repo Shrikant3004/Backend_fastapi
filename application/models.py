@@ -23,4 +23,5 @@ class Task(Base):
     id = Column(Integer,nullable=False,primary_key = True)
     task = Column(String,nullable = False)
     user_id = Column(Integer,ForeignKey("Users_project.id",ondelete="CASCADE"),nullable = False)
+    status = Column(String,nullable = False,server_default = "Incomplete")
     owner = relationship("User")   

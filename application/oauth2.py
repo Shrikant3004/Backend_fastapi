@@ -3,9 +3,10 @@ from datetime import datetime,timedelta
 from fastapi.security.oauth2 import OAuth2PasswordBearer
 from fastapi import Depends,HTTPException,status
 from . import schema
+from .config import settings
 
-secret_key = "5as5d65adad65a4ds683awd9awd5a8wdd45ad5a34dawdad533ad4ef6dvdr6gd"
-Algorithm  = "HS256"
+secret_key = settings.secret_key
+Algorithm  = settings.algorithm
 
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="login")  # for request to "/login"  tokenUrl = "login"
