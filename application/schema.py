@@ -9,10 +9,11 @@ class User(BaseModel):
 
 class task(BaseModel):
     task : str
-    user_id : int
+
 
 
 class User_response(BaseModel):
+    id : int
     username : str
     created_at :datetime
     class Config:
@@ -21,5 +22,16 @@ class User_response(BaseModel):
 class task_response(BaseModel):
     user : User_response
     task : List[str]
+    task_id : List[int]
     class Config:
         orm_mode = True
+
+class token(BaseModel):
+    access_token :str
+    token_type :str
+    class Config:
+        orm_mode = True
+
+
+class tokendata(BaseModel):
+    id :str        
